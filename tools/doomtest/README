@@ -1,0 +1,10 @@
+Doom host test: runs the real doom.pico code (Doom sources + pico layer,
+unmodified) on 64-bit Linux against a syscall-only fake kernel.
+
+  ./build.sh                  build it (needs the WAD at ../../doom1.wad)
+  ./doomtest -timedemo demo1  replay demo1..3, prints gametics + fps
+  ./doomtest                  attract loop (Ctrl-C to stop)
+  asm32/runtest.sh            validate the 386 fixed-point assembly
+
+out/frame_NNNN.ppm holds every 50th frame; out/ collects files Doom
+writes (default.cfg on a clean quit). See docs/DOOM.md.

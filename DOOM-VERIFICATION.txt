@@ -1,0 +1,13 @@
+DOOM verification
+================
+
+DOOM is included in the USB image:
+- doom.pico
+- doom1.wad
+
+The payload names were verified in PicoOS-Pro-2.1-usb-small.img.
+PicoOS-USB.img was rebuilt from the same DOOM-enabled USB image.
+
+The 1.44 MB legacy BIOS floppy image cannot contain the 4.2 MB DOOM WAD.
+The supported way to run DOOM is the 9 MB USB image through its UEFI path.
+In that environment the app archive is loaded by PicoOS and DOOM appears in Start.
