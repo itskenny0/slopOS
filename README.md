@@ -1,8 +1,8 @@
-# slopOS: examining the AI-authorship claim
+# slopOS: the public claims do not match the code
 
-The author's public argument that a working kernel and game port rule out AI assistance does not hold up. This repository also contains request-oriented comments and sandbox tooling consistent with an AI-assisted workflow. **Those are circumstantial indications, not proof of who wrote the code.** This review documents the evidence and its limits rather than presenting an authorship guess as a fact.
+The strongest criticism of this release is concrete: its desktop CPU graph does not measure CPU use, its standalone Task Manager repeatedly displays stale memory readings, its shell advertises an absent network stack, and its author's defense invokes a Quake port that this snapshot does not substantiate. These discrepancies undermine confidence that the published behavior was understood and checked before release. The source also contains artifacts compatible with AI assistance. **The evidence supports criticism of the claims and their validation; it does not establish that the author understands nothing or that AI did all the work.**
 
-Reviewed on **8 October 2026**, against commit [`c8142cef3cf7bc28906c947fab53d58385ef823a`](https://github.com/PicoOS-Pro-v/picoOS/commit/c8142cef3cf7bc28906c947fab53d58385ef823a), which was the head of both the upstream project and this fork when inspected. Repository citations below point to that fixed revision, including the [original README](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/README.md).
+Reviewed on **8 October 2026**, against commit [`c8142cef3cf7bc28906c947fab53d58385ef823a`](https://github.com/PicoOS-Pro-v/picoOS/commit/c8142cef3cf7bc28906c947fab53d58385ef823a), the upstream code revision from which this fork was cloned. Repository citations below point to that fixed revision, including the [original README](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/README.md).
 
 **What the author actually said**
 
@@ -14,7 +14,45 @@ In a [reply challenging the AI allegations](https://www.reddit.com/r/osdev/comme
 
 That is the argument addressed here. It should not be silently rewritten into a stronger quotation such as an explicit declaration that no AI was ever used.
 
-**1. A successful build cannot establish human-only authorship**
+**The desktop's CPU graph is a clock ratio, not a utilization measurement**
+
+The [announcement promotes a live Task Manager](https://www.reddit.com/r/osdev/comments/1wxom7n/picoos_pro_v21_my_custom_32bit_x86_os_written/). In that desktop window, [the graph is explicitly labelled CPU](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/apps/menu.c#L829-L847), but [its sampling function](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/apps/menu.c#L807-L820) calculates:
+
+```c
+int cpu=(ms && dt)?(int)((dt*1000)/(ms*10)):0;
+```
+
+Here, `dt` is elapsed timer ticks and `ms` is elapsed milliseconds. The [API wrappers](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/kernel/exec.c#L43-L46) lead to [two readings of the same timer counter](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/kernel/timer.c#L3-L19), initialized at [100 Hz](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/kernel/main.c#L112-L113). For consistent samples without overflow, `ms = 10 * dt`, making the expression `1000 / 100 = 10`. Sampling races can introduce variation; actual CPU work is not an input.
+
+This is a semantic failure: a graph can refresh and still measure the wrong thing. The kernel even has [separate accounting that excludes waiting tasks](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/kernel/task.c#L134-L142) and [exports per-task CPU ticks](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/kernel/task.c#L437-L453). The desktop calculation ignores that accounting.
+
+**The standalone Task Manager refreshes the picture without refreshing its memory data**
+
+In [the separate `taskmgr` application](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/apps/taskmgr.c#L8-L12), `api->meminfo(&mi)` and `file_used()` run inside `if(first)`. The application then sets `first=0`. Its periodic update redraws memory and storage values and appends RAM-history samples using those retained values, without querying them again. Dragging the window sets `first=1` and causes another sample; ordinary timed refreshes do not.
+
+The result is a graph labelled as live whose RAM samples remain stale between full redraws. This is specific to the standalone application: the integrated desktop Task Manager does re-query memory. It is evidence of a data-refresh defect, not evidence that every displayed statistic is invented.
+
+**The defense invokes Quake, while the published port is DOOM**
+
+The author invokes a Quake port in [the quoted defense](https://www.reddit.com/r/osdev/comments/1wxom7n/comment/pe08rgy/) and [another reply](https://www.reddit.com/r/osdev/comments/1wxom7n/comment/pe0mvek/). The actual [game entry point calls `doomgeneric_Create()` and `doomgeneric_Tick()`](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/apps/doom/pico/pico_main.c#L14-L24), and the [image build packages `doom.pico` and `doom1.wad`](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/Makefile#L253-L265).
+
+Searching this revision finds only two incidental Quake mentions, both inside imported DOOM sources: [an installation-directory comment](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/apps/doom/src/d_iwad.c#L378) and [a header comment](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/apps/doom/src/z_zone.h#L15-L20). Neither is a Quake port. Invoking an implementation absent from the supplied evidence weakens the defense. A naming mistake or an unpublished build could explain this; the snapshot cannot establish that the author cannot distinguish the games.
+
+**Further discrepancies in the published implementation**
+
+The same gap between description and implementation appears elsewhere:
+
+- **The USB documentation contradicts the boot path.** The [original README says the native USB-HID driver was removed](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/README.md#L48-L55). However, [`kmain()` calls `usb_init()`](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/kernel/main.c#L200-L210), and [`usb_init()` probes xHCI, EHCI, OHCI and UHCI](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/kernel/usb.c#L446-L457). Native driver code is present and wired into startup. The README is stale or internally inconsistent.
+- **The shell advertises networking that this tree stubs out.** Its [version text lists Ethernet, TCP, DHCP, DNS and HTTP support](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/kernel/shell.c#L960-L968), but the reviewed tree has no `net/` directory. The [Makefile selects the fallback](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/Makefile#L16-L22), whose functions [report zero interfaces and fail network operations](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/stubs/net_stub.c#L12-L45).
+- **OHCI endpoint linking contains an initialization-order error.** [`ohci_init_one()` zeroes the controller structure](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/kernel/ohci.c#L269-L272). Its [allocation loop assigns each descriptor's `next` from the following slot before that slot is allocated](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/kernel/ohci.c#L295-L302). Consequently, all four `next` values are zero, and every interrupt-table entry points to the first descriptor. This contradicts the file's [description of a chain covering every interrupt endpoint](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/kernel/ohci.c#L3-L11). This finding comes from static inspection; no hardware failure is claimed to have been reproduced.
+
+**Why these bugs matter to the authorship argument**
+
+The CPU and RAM defects occur in routine display updates, without requiring unusual hardware or an obscure input. They illustrate a gap between making a feature look complete and checking what it actually measures. In the CPU case, suitable accounting already exists in the kernel, yet the desktop uses an unrelated clock ratio. In the RAM case, the application redraws its data without resampling it. These are concrete integration and validation failures.
+
+An explanation involving generated components assembled without sufficient review is compatible with that pattern. So are mistakes in manually written code. Calling these bugs impossible for a human would turn a checkable technical criticism into an unsupported authorship claim. Their evidential value is that the implementation fails to support the feature descriptions; they cannot identify who produced it.
+
+**A successful build cannot establish human-only authorship**
 
 The repository's [Makefile selects GCC and invokes it to compile kernel sources](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/Makefile#L1-L61). GCC can compile code whether it was written by a person, generated by a model, or edited by both. A working executable therefore cannot resolve that distinction.
 
@@ -22,7 +60,7 @@ AI coding tools can also operate compilers and test harnesses. Anthropic's [24 F
 
 These sources rebut the general premise that working low-level software excludes AI involvement. They do not demonstrate the exact Quake port described in the reply, or connect any particular AI tool to PicoOS. The port documented in this snapshot is [DOOM via doomgeneric](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/docs/DOOM.md#L1-L6).
 
-**2. A kernel comment refers to an external request**
+**The circumstantial case for AI assistance: request-oriented comments**
 
 The USB implementation contains this sentence:
 
@@ -32,7 +70,7 @@ It then explains why taking over the USB controller requires keyboard support as
 
 **Interpretation:** this could be an assistant explaining an implementation that exceeded a prompt's literal scope. It could equally be a human documenting a feature request. The comment supports investigating how the work was requested; it does not identify the implementer.
 
-**3. The tooling describes a restricted, temporary sandbox**
+**The tooling describes a restricted, temporary sandbox**
 
 The environment setup script states:
 
@@ -44,7 +82,7 @@ Two other files corroborate that environment: the [QEMU automation defaults to b
 
 **Interpretation:** these are consistent with development inside a hosted coding sandbox, including one operated by an AI assistant. Human-operated containers, restricted accounts and remote development environments can have the same constraints. These files do not establish a vendor, model or AI involvement by themselves.
 
-**4. The documentation retains source-handoff language**
+**The documentation retains source-handoff language**
 
 The original README describes starting from supplied PicoOS 1.1 sources and later says:
 
@@ -57,21 +95,13 @@ Similarly, the [network stub's introduction](https://github.com/PicoOS-Pro-v/pic
 
 **Interpretation:** this resembles a handoff report from someone modifying a provided archive, which is compatible with an assistant workflow. It is also compatible with a human collaborator or the author moving between their own archives. These passages cannot establish undisclosed AI use, and should not be counted as independent proof merely because they appear in several files.
 
-**Technical claims that can actually be checked**
-
-Reading the implementation reveals concrete inconsistencies. They matter to the project's documentation and reliability, but are not AI detectors:
-
-- **The USB documentation contradicts the boot path.** The [original README says the native USB-HID driver was removed](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/README.md#L48-L55). However, [`kmain()` calls `usb_init()`](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/kernel/main.c#L200-L210), and [`usb_init()` probes xHCI, EHCI, OHCI and UHCI](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/kernel/usb.c#L446-L457). Native driver code is present and wired into startup. The README is stale or internally inconsistent.
-- **The shell advertises networking that this tree stubs out.** Its [version text lists Ethernet, TCP, DHCP, DNS and HTTP support](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/kernel/shell.c#L960-L968), but the reviewed tree has no `net/` directory. The [Makefile selects the fallback](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/Makefile#L16-L22), whose functions [report zero interfaces and fail network operations](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/stubs/net_stub.c#L12-L45).
-- **OHCI endpoint linking contains an initialization-order error.** [`ohci_init_one()` zeroes the controller structure](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/kernel/ohci.c#L269-L272). Its [allocation loop assigns each descriptor's `next` from the following slot before that slot is allocated](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/kernel/ohci.c#L295-L302). Consequently, all four `next` values are zero, and every interrupt-table entry points to the first descriptor. This contradicts the file's [description of a chain covering every interrupt endpoint](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/kernel/ohci.c#L3-L11). This finding comes from static inspection; no hardware failure is claimed to have been reproduced.
-
 **What remains unproven**
 
 The inspected revision has [one initial import commit](https://github.com/PicoOS-Pro-v/picoOS/commit/c8142cef3cf7bc28906c947fab53d58385ef823a), so its Git history cannot reconstruct the development process. That is a limitation of the evidence, not evidence of concealment. No AI transcript, explicit AI attribution or model-specific generation record was found in the tracked files reviewed. Comment style, bugs and the choice to distribute ZIP files cannot fill that gap.
 
 The bundled DOOM sources also should not be presented as tens of thousands of lines newly written by this author or by an AI: the project [explicitly credits doomgeneric and distinguishes its platform layer](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/docs/DOOM.md#L50-L65).
 
-The supported rebuttal is that the author's capability argument does not establish absence of AI assistance. The request and sandbox artifacts provide specific leads for a provenance discussion. Establishing actual AI use would require stronger evidence, such as attributable development logs, matching generation records or an acknowledgement. This review does not establish that the author lied.
+Taken together, the measurable defects and contradictory descriptions support a serious criticism of release validation: the public presentation promises more than the implementation delivers. The cited replies do not answer those implementation problems, and pointing to a running game cannot establish who wrote its port. Substantial AI assistance is a possible explanation for the request and handoff artifacts, but the evidence does not distinguish it from human collaboration, ordinary mistakes or poorly maintained documentation. Establishing the author's understanding or the actual division of work would require attributable development records or concrete technical explanations. Declaring total ignorance or complete AI authorship would go beyond this record.
 
 To inspect the same evidence locally, use the fixed revision rather than the changing branch head:
 
@@ -81,6 +111,10 @@ git rev-list --count "$review_commit"
 git show "$review_commit:kernel/usb.c" | sed -n '15,24p'
 git show "$review_commit:tools/devenv.sh" | sed -n '1,49p'
 git show "$review_commit:kernel/ohci.c" | sed -n '269,302p'
+git show "$review_commit:apps/menu.c" | sed -n '807,847p'
+git show "$review_commit:kernel/timer.c" | sed -n '1,19p'
+git show "$review_commit:apps/taskmgr.c" | sed -n '8,12p'
+git grep -n -i quake "$review_commit" -- . ':!doom1.wad'
 git ls-tree -r --name-only "$review_commit" -- net/
 ```
 
