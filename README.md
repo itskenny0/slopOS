@@ -6,13 +6,17 @@ There is also a concrete case against the release's validation: its desktop CPU 
 
 Reviewed on **8 October 2026**, against commit [`c8142cef3cf7bc28906c947fab53d58385ef823a`](https://github.com/PicoOS-Pro-v/picoOS/commit/c8142cef3cf7bc28906c947fab53d58385ef823a), the upstream code revision from which this fork was cloned. Repository citations below point to that fixed revision, including the [original README](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/README.md).
 
-**What the author actually said**
+**What the author said across Reddit**
 
-The [announcement](https://www.reddit.com/r/osdev/comments/1wxom7n/picoos_pro_v21_my_custom_32bit_x86_os_written/) describes an operating system built from scratch, explicitly meaning no Linux kernel or external base. That description alone does not say whether AI tools were used.
+The author posted the release in both [r/osdev](https://www.reddit.com/r/osdev/comments/1wxom7n/picoos_pro_v21_my_custom_32bit_x86_os_written/) and [r/AlternativeOS](https://www.reddit.com/r/AlternativeOS/comments/1wxmcdn/picoos_pro_v21_my_custom_32bit_x86_os_written/). Both announcements contain this statement:
 
-In a [reply challenging the AI allegations](https://www.reddit.com/r/osdev/comments/1wxom7n/comment/pe08rgy/), the author wrote:
+> I wanted to share my hobby operating system that I’ve been building completely from scratch (no Linux kernel, no external base).
 
-> Call it AI all you want, but AI can't compile a stable custom x86 graphics driver and port Quake to a custom kernel.
+The parenthetical defines the claim in terms of the OS base; it does not specify whether AI tools were used. The excerpts below were checked against public posts and comments by `u/picoOS-official` on 8 October 2026, preserving their wording. An [earlier r/osdev submission](https://www.reddit.com/r/osdev/comments/1wxkqw5/picoospro_v21/) is listed as removed, so its unavailable body is not used as evidence.
+
+In a [reply challenging the AI allegations](https://www.reddit.com/r/osdev/comments/1wxom7n/comment/pe08rgy/), the author wrote these consecutive sentences:
+
+> I know how version control works, I just chose not to use it because I wanted to spend 100% of my time inside the actual kernel code and drivers instead of managing repositories. Call it AI all you want, but AI can't compile a stable custom x86 graphics driver and port Quake to a custom kernel.
 
 That is the argument addressed here. It should not be silently rewritten into a stronger quotation such as an explicit declaration that no AI was ever used.
 
@@ -52,11 +56,36 @@ tools/__pycache__/mkesp.cpython-313.pyc:
 
 Earlier archives contain paths under `/home/user/picoos/`; v2.0 contains `/home/user/myos/PicoOS-Pro-v2.0/tools/`. Together with the sandbox tooling and source-handoff language discussed below, these are concrete traces compatible with passing release archives through a hosted assistant environment. **That interpretation remains circumstantial:** directory names can be chosen by anyone, and a bytecode filename need not identify the machine or person that compiled it. They are not a vendor-specific code-generation record.
 
-Git unfamiliarity does not close that evidentiary gap. The author's [reply about Git](https://www.reddit.com/r/osdev/comments/1wxom7n/comment/pe0e8id/) describes it as overhead, while the v0.6 archive already contains an initialized `.git` directory with no object or ref files. Neither establishes who wrote the code or how well the author understands it.
+**The author's explanation for ZIP releases, followed by the GitHub update**
+
+Asked in the separate r/AlternativeOS thread why the source was not on GitHub or Codeberg, the author [explained the workflow](https://www.reddit.com/r/AlternativeOS/comments/1wxmcdn/comment/pdveaal/):
+
+> I am currently using Google Drive just to quickly share the build images and the zip files while I focus 100% on the kernel development (like the new native USB drivers and the 3D graphics engine).
+> However, moving the project to GitHub is definitely on my to-do list very soon! It will make it much easier for everyone to browse the source code and track the updates.
+
+In [r/osdev, replying to a suggestion that Git would take less time](https://www.reddit.com/r/osdev/comments/1wxom7n/comment/pe0e8id/), the author wrote:
+
+> For me, dragging a new folder into Google Drive and making it public literally takes 1 or 2 minutes and I'm completely done. With Git, I would have to set up repositories and run a bunch of commands every time, which takes away time from writing code.
+
+Those statements describe a preference for packaging and uploading complete directories. That fits the released archives, but does not identify who produced their contents. The v0.6 archive also contains an initialized `.git` directory with no object or ref files; the available evidence cannot turn a workflow preference into a finding about the author's programming ability.
+
+The later updates matter too. In [r/AlternativeOS](https://www.reddit.com/r/AlternativeOS/comments/1wxmcdn/comment/pe7dmse/), the author followed up:
+
+> i did it on git!
+
+And in [r/osdev](https://www.reddit.com/r/osdev/comments/1wxom7n/comment/peeo87p/):
+
+> no i use google drive for my iso's and github for the open source
+
+The public GitHub import confirms that the source was subsequently published there. It would therefore be inaccurate to describe the current distribution as Drive-only. Publishing a snapshot still does not recover the missing development history.
 
 **The desktop's CPU graph is a clock ratio, not a utilization measurement**
 
-The [announcement promotes a live Task Manager](https://www.reddit.com/r/osdev/comments/1wxom7n/picoos_pro_v21_my_custom_32bit_x86_os_written/). In that desktop window, [the graph is explicitly labelled CPU](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/apps/menu.c#L829-L847), but [its sampling function](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/apps/menu.c#L807-L820) calculates:
+The author also promoted the live Task Manager in the [r/AlternativeOS announcement](https://www.reddit.com/r/AlternativeOS/comments/1wxmcdn/picoos_pro_v21_my_custom_32bit_x86_os_written/):
+
+> Custom Desktop Environment: A Windows/Ubuntu-style dark desktop interface with a Start-button launcher, application grid, live Task Manager (with process, memory, and background/foreground info), and a functional Calculator app.
+
+In that desktop window, [the graph is explicitly labelled CPU](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/apps/menu.c#L829-L847), but [its sampling function](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/apps/menu.c#L807-L820) calculates:
 
 ```c
 int cpu=(ms && dt)?(int)((dt*1000)/(ms*10)):0;
@@ -74,13 +103,27 @@ The result is a graph labelled as live whose RAM samples remain stale between fu
 
 **The defense invokes Quake, while the published port is DOOM**
 
-The author invokes a Quake port in [the quoted defense](https://www.reddit.com/r/osdev/comments/1wxom7n/comment/pe08rgy/) and [another reply](https://www.reddit.com/r/osdev/comments/1wxom7n/comment/pe0mvek/). The actual [game entry point calls `doomgeneric_Create()` and `doomgeneric_Tick()`](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/apps/doom/pico/pico_main.c#L14-L24), and the [image build packages `doom.pico` and `doom1.wad`](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/Makefile#L253-L265).
+The author invokes Quake in the defense quoted above and repeats the claim in [another reply](https://www.reddit.com/r/osdev/comments/1wxom7n/comment/pe0mvek/):
+
+> If you think this project is just AI-generated, feel free to try and build a custom x86 kernel that boots and runs Quake yourself.
+
+However, the author's own [r/AlternativeOS announcement](https://www.reddit.com/r/AlternativeOS/comments/1wxmcdn/picoos_pro_v21_my_custom_32bit_x86_os_written/) identifies the port differently:
+
+> DOOM Port: I successfully ported `doomgeneric` as `doom.pico`.
+
+The actual [game entry point calls `doomgeneric_Create()` and `doomgeneric_Tick()`](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/apps/doom/pico/pico_main.c#L14-L24), and the [image build packages `doom.pico` and `doom1.wad`](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/Makefile#L253-L265). The announcement agrees with the supplied implementation; the repeated Quake defense does not.
 
 Searching this revision finds only two incidental Quake mentions, both inside imported DOOM sources: [an installation-directory comment](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/apps/doom/src/d_iwad.c#L378) and [a header comment](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/apps/doom/src/z_zone.h#L15-L20). Neither is a Quake port. Invoking an implementation absent from the supplied evidence weakens the defense. A naming mistake or an unpublished build could explain this; the snapshot cannot establish that the author cannot distinguish the games.
 
 **Further discrepancies in the published implementation**
 
-The same gap between description and implementation appears elsewhere:
+The [r/AlternativeOS announcement](https://www.reddit.com/r/AlternativeOS/comments/1wxmcdn/picoos_pro_v21_my_custom_32bit_x86_os_written/) introduces its feature list and USB support as follows:
+
+> Here is a quick overview of what is currently implemented and stable:
+>
+> Native USB Stack (NEW): Full native driver support for USB 1.1, 2.0, and 3.0 (UHCI/OHCI, EHCI, and xHCI controllers), handling mice and keyboards smoothly without relying on firmware emulation.
+
+That makes stability a published claim about the release. The following discrepancies qualify that claim; they are not evidence that every controller or every tested machine fails:
 
 - **The USB documentation contradicts the boot path.** The [original README says the native USB-HID driver was removed](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/README.md#L48-L55). However, [`kmain()` calls `usb_init()`](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/kernel/main.c#L200-L210), and [`usb_init()` probes xHCI, EHCI, OHCI and UHCI](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/kernel/usb.c#L446-L457). Native driver code is present and wired into startup. The README is stale or internally inconsistent.
 - **The shell advertises networking that this tree stubs out.** Its [version text lists Ethernet, TCP, DHCP, DNS and HTTP support](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/kernel/shell.c#L960-L968), but the reviewed tree has no `net/` directory. The [Makefile selects the fallback](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/Makefile#L16-L22), whose functions [report zero interfaces and fail network operations](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/stubs/net_stub.c#L12-L45).
