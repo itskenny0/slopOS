@@ -1,0 +1,215 @@
+{
+  "reviewed_on": "2026-10-08",
+  "public_folder": "https://drive.google.com/drive/folders/19LPX5pHZpIYsnQT0Tiatpv11nE39frHA",
+  "archives": [
+    {
+      "name": "picoos v0,1 kaas.zip",
+      "url": "https://drive.google.com/file/d/1_iPJJT2i9MwU4t6GZhglB70JYJWy-DoP/view",
+      "size_bytes": 53904,
+      "sha256": "34cf1c174eba56d5176e38b9239a7a013919731cc945fd7a46ec9a253c90d782",
+      "bytecode_paths": [],
+      "regular_file_entries": 21
+    },
+    {
+      "name": "picoos v0,1.zip",
+      "url": "https://drive.google.com/file/d/1bibsmm9JMF-LqaEkl-S7NaCg6AetOE9K/view",
+      "size_bytes": 198790,
+      "sha256": "d3bc7ceb201636de81d6591dc6183f89fe2c982bd68e4c24efc9e6745ac2fdfc",
+      "bytecode_paths": [],
+      "regular_file_entries": 29
+    },
+    {
+      "name": "picoos v0,2.zip",
+      "url": "https://drive.google.com/file/d/1izpkwoOZ9g7GKWtbcIMtNJlGHBtaVQMH/view",
+      "size_bytes": 249489,
+      "sha256": "af7c42cadcef6282f60bf8f7205343a1f2a32e9b84fea357a98aa5f1a8fb2fab",
+      "bytecode_paths": [
+        {
+          "archive_path": "picoos/tools/__pycache__/gametest.cpython-313.pyc",
+          "sha256": "3199126cc8be00d150921036a83141a1ebe9c97e4336589b01e51362ff8c5711",
+          "embedded_path_strings": [
+            "/home/user/picoos/tools/gametest.py"
+          ]
+        }
+      ],
+      "regular_file_entries": 44
+    },
+    {
+      "name": "picoos v0,3.zip",
+      "url": "https://drive.google.com/file/d/1T00viflTy5utTz74AndgVyyAIM3OB4j5/view",
+      "size_bytes": 371968,
+      "sha256": "cd6b62f23c8301ec690165a6e5620a78c05cee6d054bd490019545fc61c2f04c",
+      "bytecode_paths": [],
+      "regular_file_entries": 53
+    },
+    {
+      "name": "picoos v0,4.zip",
+      "url": "https://drive.google.com/file/d/16EJC6Nit6pwFzhja2_6tkJq8yJ8wn4EN/view",
+      "size_bytes": 540927,
+      "sha256": "f464b36c33c9b7dd03ad7fd5e3053d51e35e3721c99107908f0a55c622220cc2",
+      "bytecode_paths": [
+        {
+          "archive_path": "picoos/tools/__pycache__/lzss.cpython-313.pyc",
+          "sha256": "15b589b1ee6127ba9a2cb5eda214294dd5c4fcafda954f9a38f63b775a7caf5a",
+          "embedded_path_strings": [
+            "/home/user/picoos/tools/lzss.py"
+          ]
+        }
+      ],
+      "regular_file_entries": 61
+    },
+    {
+      "name": "picoos v0,5.zip",
+      "url": "https://drive.google.com/file/d/1omEIG3cZGZIMDGp5Z_TJEiCUrDWRRA5o/view",
+      "size_bytes": 606527,
+      "sha256": "ab42b3d4624311b259968a3fd88b704dd9fac5f728f772be68ee63914621c302",
+      "bytecode_paths": [
+        {
+          "archive_path": "picoos/tools/__pycache__/lzss.cpython-313.pyc",
+          "sha256": "38d1949db3fab8a9c1907682cb922ab2c738d7c5cd603e5b900f25a0f47db7f2",
+          "embedded_path_strings": [
+            "/home/user/picoos/tools/lzss.py"
+          ]
+        }
+      ],
+      "regular_file_entries": 65
+    },
+    {
+      "name": "picoos v0,6.zip",
+      "url": "https://drive.google.com/file/d/1LZVs3vQkeEPeXIS9KwtQcXqc49oySUVh/view",
+      "size_bytes": 660846,
+      "sha256": "a4c65fb9c441e680718b12c62736caf65720f8bf50093bca22092a8ea71b4873",
+      "bytecode_paths": [
+        {
+          "archive_path": "picoos/tools/__pycache__/lzss.cpython-313.pyc",
+          "sha256": "bdde0805fca07195ff4ff226d2dc3a08a705896ee711ac02ee8a9e513b94760a",
+          "embedded_path_strings": [
+            "/home/user/picoos/tools/lzss.py"
+          ]
+        }
+      ],
+      "regular_file_entries": 84,
+      "git_metadata": {
+        "HEAD": "ref: refs/heads/master\n",
+        "config": "[core]\n\trepositoryformatversion = 0\n\tfilemode = true\n\tbare = false\n\tlogallrefupdates = true\n",
+        "object_files": [],
+        "ref_files": []
+      }
+    },
+    {
+      "name": "picoos v0,7.zip",
+      "url": "https://drive.google.com/file/d/1YoAJpliVTLi71ex4FVra-L18J7gzrAve/view",
+      "size_bytes": 908982,
+      "sha256": "3b65f603bbf1b81e93b3f27d2f82e750084313ac1f5b05ebfd56207272dfe3f6",
+      "bytecode_paths": [
+        {
+          "archive_path": "picoos/tools/__pycache__/screen.cpython-313.pyc",
+          "sha256": "3979a77b418573e7e5061ebf6bc927301b000995a038717819e888d32855bc86",
+          "embedded_path_strings": [
+            "/home/user/picoos/tools/screen.py"
+          ]
+        },
+        {
+          "archive_path": "picoos/tools/__pycache__/lzss.cpython-313.pyc",
+          "sha256": "c1aba36dfa56e0535a26ee1a055ae407a860657d9db25d56f81233731250f065",
+          "embedded_path_strings": [
+            "/home/user/picoos/tools/lzss.py"
+          ]
+        }
+      ],
+      "regular_file_entries": 85
+    },
+    {
+      "name": "picoos v0,9.zip",
+      "url": "https://drive.google.com/file/d/1c_jU5Iod1QJEJQ2qeLde28MupuHH3MLu/view",
+      "size_bytes": 1336633,
+      "sha256": "30240634d7579ad4d6299a3e16172143f92f02e334bd22f2b33076a7998f48f2",
+      "bytecode_paths": [
+        {
+          "archive_path": "picoos/tools/__pycache__/lzss.cpython-313.pyc",
+          "sha256": "baf48f6f56dd8c70c9979fa62284a41f3c1c6ec3c5ca93e0bcf581c06289237d",
+          "embedded_path_strings": [
+            "/home/user/picoos/tools/lzss.py"
+          ]
+        },
+        {
+          "archive_path": "picoos/tools/__pycache__/screen.cpython-313.pyc",
+          "sha256": "557476975612fae4ef0827bcccb5d9036c20c79d60d22a934affd16980537348",
+          "embedded_path_strings": [
+            "/home/user/picoos/tools/screen.py"
+          ]
+        }
+      ],
+      "regular_file_entries": 90
+    },
+    {
+      "name": "picoos-pro-1.1-boot.zip",
+      "url": "https://drive.google.com/file/d/1OPzgKabbpCyM9f7oCDA-hWfA7g1yVk5P/view",
+      "size_bytes": 923904,
+      "sha256": "7c62c41ae8c4d3c7e458622bed8c825674855bf5b73c3a6e05bfdbf123c62e65",
+      "bytecode_paths": [
+        {
+          "archive_path": "picoos/tools/__pycache__/lzss.cpython-313.pyc",
+          "sha256": "d6d8b3b45000e06de57dd3ec11547ac40eb5000fb5ca94217e075b7ede6e9029",
+          "embedded_path_strings": [
+            "/home/user/picoos/picoos/tools/lzss.py"
+          ]
+        }
+      ],
+      "regular_file_entries": 95
+    },
+    {
+      "name": "PicoOS-Pro-2.0.zip",
+      "url": "https://drive.google.com/file/d/1NW95TlNRoC8sBtGUZcgk5u7j4x-pWh0U/view",
+      "size_bytes": 11536997,
+      "sha256": "89e9fdb51b9eb9d42610b6e748a028c233cea82bbf35f3948962b327cd9bd196",
+      "bytecode_paths": [
+        {
+          "archive_path": "PicoOS-Pro-2.0/tools/__pycache__/lzss.cpython-313.pyc",
+          "sha256": "579737348d1645af4c0bd8786267ab28e8134eac75ea1e74d0d6ab47c6c0439b",
+          "embedded_path_strings": [
+            "/home/user/myos/PicoOS-Pro-v2.0/tools/lzss.py"
+          ]
+        },
+        {
+          "archive_path": "PicoOS-Pro-2.0/tools/__pycache__/addapp.cpython-313.pyc",
+          "sha256": "b77d089ded20351efde81951602465d6c27ec49ed43b1ba400596dc039119056",
+          "embedded_path_strings": [
+            "/home/user/myos/PicoOS-Pro-v2.0/tools/addapp.py"
+          ]
+        },
+        {
+          "archive_path": "PicoOS-Pro-2.0/tools/__pycache__/mkesp.cpython-313.pyc",
+          "sha256": "a8667d913e083769fa32c9a8881e6ef4ab45053cecf1b67f41e34f6928af8a4f",
+          "embedded_path_strings": [
+            "/home/user/myos/PicoOS-Pro-v2.0/tools/mkesp.py"
+          ]
+        }
+      ],
+      "regular_file_entries": 307
+    },
+    {
+      "name": "PicoOS-Pro-v2.1.zip",
+      "url": "https://drive.google.com/file/d/1_f1yP_agk3YOhwr4VLzQAunHAiWKag4J/view",
+      "size_bytes": 8205827,
+      "sha256": "c7fe539acb1e865b65767532e2ccf56971cf79c94fbff8b0fa4456a04d8467da",
+      "bytecode_paths": [
+        {
+          "archive_path": "PicoOS-Pro-v2.1-doom-package/PicoOS-Pro-v2.1/tools/__pycache__/lzss.cpython-313.pyc",
+          "sha256": "45131bdd58f890b5de7bb66cc2fa92116a4ea4b489b75f2b5f02866f918e25ed",
+          "embedded_path_strings": [
+            "/mnt/data/pico_v21/PicoOS-Pro-v2.1/tools/lzss.py"
+          ]
+        },
+        {
+          "archive_path": "PicoOS-Pro-v2.1-doom-package/PicoOS-Pro-v2.1/tools/__pycache__/mkesp.cpython-313.pyc",
+          "sha256": "18ead051fc0a25845afc1bde00153887ce576cc444df132db2d75113fd4bbac8",
+          "embedded_path_strings": [
+            "/mnt/data/pico_v21/PicoOS-Pro-v2.1/tools/mkesp.py"
+          ]
+        }
+      ],
+      "regular_file_entries": 324
+    }
+  ]
+}

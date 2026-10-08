@@ -1,0 +1,182 @@
+{
+  "review_commit": "c8142cef3cf7bc28906c947fab53d58385ef823a",
+  "packages": {
+    "c2pa-python": "0.38.0",
+    "pillow": "12.3.0",
+    "numpy": "2.5.3"
+  },
+  "c2pa_sdk_version": "0.91.0",
+  "trust_sources": [
+    {
+      "url": "https://raw.githubusercontent.com/c2pa-org/conformance-public/43a0a6f09091a062083a4ba33e3acc19dd721282/trust-list/C2PA-TRUST-LIST.pem",
+      "sha256": "75cacc98b79ecac33713c7ecfb58d4a0ef383f3c1f886e7409f9e37e8664aea5"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/c2pa-org/conformance-public/43a0a6f09091a062083a4ba33e3acc19dd721282/trust-list/C2PA-TSA-TRUST-LIST.pem",
+      "sha256": "c688d3555f4a2f1f8d663472bbd37888ff234abdd234c25934c0f9292e4eb5c9"
+    }
+  ],
+  "verification_options": {
+    "trust_config": "1.3.6.1.4.1.62558.2.1\n1.3.6.1.5.5.7.3.36\n1.3.6.1.5.5.7.3.4",
+    "verify": {
+      "verify_after_reading": true,
+      "verify_trust": true,
+      "verify_timestamp_trust": true,
+      "remote_manifest_fetch": false,
+      "ocsp_fetch": false
+    }
+  },
+  "wallpaper": {
+    "source_sha256": "ea13e5fa67efa87a86cfbdf4415e9b2ff44ec95ee2221a8db78b4b1eccf16355",
+    "header_sha256": "292203d7baaea296543adf8d1417fc13f8b27687314b09b8a7a4972e4ab74a69",
+    "header_reproduced_exactly": true,
+    "c2pa": {
+      "active_manifest": "urn:c2pa:0ac42674-da5a-4cc3-8d8b-f102af309bba",
+      "manifests": {
+        "urn:c2pa:0ac42674-da5a-4cc3-8d8b-f102af309bba": {
+          "claim_generator_info": [
+            {
+              "name": "OpenAI Media Service API",
+              "icon": {
+                "format": "image/svg+xml",
+                "identifier": "self#jumbf=/c2pa/urn:c2pa:0ac42674-da5a-4cc3-8d8b-f102af309bba/c2pa.assertions/c2pa.icon"
+              },
+              "specVersion": "2.2.0",
+              "org.contentauth.c2pa_rs": "0.79.2"
+            }
+          ],
+          "title": "image.png",
+          "instance_id": "xmp:iid:e0680616-9608-47e9-a9c2-0c9f6fd29f15",
+          "assertions": [
+            {
+              "label": "c2pa.actions.v2",
+              "data": {
+                "actions": [
+                  {
+                    "action": "c2pa.created",
+                    "when": "2026-10-01T16:48:51.791839430Z",
+                    "softwareAgent": {
+                      "name": "ChatGPT",
+                      "version": "gpt-image"
+                    },
+                    "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia"
+                  },
+                  {
+                    "action": "c2pa.converted",
+                    "when": "2026-10-01T16:48:51.791844157Z"
+                  },
+                  {
+                    "action": "c2pa.watermarked.unbound",
+                    "when": "2026-10-01T16:48:51.790382437Z"
+                  }
+                ],
+                "allActionsIncluded": false
+              },
+              "created": true
+            }
+          ],
+          "signature_info": {
+            "alg": "Es256",
+            "issuer": "OpenAI OpCo, LLC",
+            "common_name": "OpenAI Media Service",
+            "cert_serial_number": "471440979205905794604524502504016020624908622401",
+            "time": "2026-10-01T16:48:51.799074+00:00"
+          },
+          "label": "urn:c2pa:0ac42674-da5a-4cc3-8d8b-f102af309bba",
+          "claim_version": 2
+        }
+      },
+      "validation_results": {
+        "activeManifest": {
+          "success": [
+            {
+              "code": "signingCredential.ocsp.notRevoked",
+              "url": "self#jumbf=/c2pa/urn:c2pa:0ac42674-da5a-4cc3-8d8b-f102af309bba/c2pa.signature",
+              "explanation": "signing cert not revoked: 471440979205905794604524502504016020624908622401"
+            },
+            {
+              "code": "timeStamp.validated",
+              "url": "self#jumbf=/c2pa/urn:c2pa:0ac42674-da5a-4cc3-8d8b-f102af309bba/c2pa.signature",
+              "explanation": "timestamp message digest matched: OpenAI TSA Leaf"
+            },
+            {
+              "code": "signingCredential.trusted",
+              "url": "self#jumbf=/c2pa/urn:c2pa:0ac42674-da5a-4cc3-8d8b-f102af309bba/c2pa.signature",
+              "explanation": "signing certificate trusted, found in [https://raw.githubusercontent.com/c2pa-org/conformance-public/43a0a6f09091a062083a4ba33e3acc19dd721282/trust-list/C2PA-TSA-TRUST-LIST.pem] trust anchors"
+            },
+            {
+              "code": "claimSignature.insideValidity",
+              "url": "self#jumbf=/c2pa/urn:c2pa:0ac42674-da5a-4cc3-8d8b-f102af309bba/c2pa.signature",
+              "explanation": "claim signature valid"
+            },
+            {
+              "code": "claimSignature.validated",
+              "url": "self#jumbf=/c2pa/urn:c2pa:0ac42674-da5a-4cc3-8d8b-f102af309bba/c2pa.signature",
+              "explanation": "claim signature valid"
+            },
+            {
+              "code": "assertion.hashedURI.match",
+              "url": "self#jumbf=/c2pa/urn:c2pa:0ac42674-da5a-4cc3-8d8b-f102af309bba/c2pa.assertions/c2pa.icon",
+              "explanation": "hashed uri matched: self#jumbf=c2pa.assertions/c2pa.icon"
+            },
+            {
+              "code": "assertion.hashedURI.match",
+              "url": "self#jumbf=/c2pa/urn:c2pa:0ac42674-da5a-4cc3-8d8b-f102af309bba/c2pa.assertions/c2pa.actions.v2",
+              "explanation": "hashed uri matched: self#jumbf=c2pa.assertions/c2pa.actions.v2"
+            },
+            {
+              "code": "assertion.hashedURI.match",
+              "url": "self#jumbf=/c2pa/urn:c2pa:0ac42674-da5a-4cc3-8d8b-f102af309bba/c2pa.assertions/c2pa.hash.data",
+              "explanation": "hashed uri matched: self#jumbf=c2pa.assertions/c2pa.hash.data"
+            },
+            {
+              "code": "assertion.dataHash.match",
+              "url": "self#jumbf=/c2pa/urn:c2pa:0ac42674-da5a-4cc3-8d8b-f102af309bba/c2pa.assertions/c2pa.hash.data",
+              "explanation": "data hash valid"
+            }
+          ],
+          "informational": [
+            {
+              "code": "timeStamp.untrusted",
+              "url": "self#jumbf=/c2pa/urn:c2pa:0ac42674-da5a-4cc3-8d8b-f102af309bba/c2pa.signature",
+              "explanation": "timestamp cert untrusted: OpenAI TSA Leaf"
+            }
+          ],
+          "failure": []
+        },
+        "specVersion": "2.4.0",
+        "trustListUri": "https://raw.githubusercontent.com/c2pa-org/conformance-public/43a0a6f09091a062083a4ba33e3acc19dd721282/trust-list/C2PA-TSA-TRUST-LIST.pem"
+      },
+      "validation_state": "Trusted"
+    }
+  },
+  "bytecode": [
+    {
+      "file": "tools/__pycache__/lzss.cpython-313.pyc",
+      "sha256": "45131bdd58f890b5de7bb66cc2fa92116a4ea4b489b75f2b5f02866f918e25ed",
+      "embedded_path_strings": [
+        "/mnt/data/pico_v21/PicoOS-Pro-v2.1/tools/lzss.py"
+      ]
+    },
+    {
+      "file": "tools/__pycache__/mkesp.cpython-313.pyc",
+      "sha256": "18ead051fc0a25845afc1bde00153887ce576cc444df132db2d75113fd4bbac8",
+      "embedded_path_strings": [
+        "/mnt/data/pico_v21/PicoOS-Pro-v2.1/tools/mkesp.py"
+      ]
+    }
+  ],
+  "archive_comparison": {
+    "sha256": "c7fe539acb1e865b65767532e2ccf56971cf79c94fbff8b0fa4456a04d8467da",
+    "tracked_files": 312,
+    "matching_files": 311,
+    "different_files": [
+      {
+        "file": "LICENSE",
+        "archive_sha256": "cbfdcf56b04a896db5ffe85cb09c29a1196a2878b3178efdd5940cd299844d74",
+        "git_sha256": "38399e64231d0bcaa609505ac15639f82315f3e95e284cf1dc79c922cd0dcf2f"
+      }
+    ],
+    "missing_files": []
+  }
+}

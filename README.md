@@ -1,6 +1,8 @@
-# slopOS: the public claims do not match the code
+# slopOS: documented AI provenance and problems in the release
 
-The strongest criticism of this release is concrete: its desktop CPU graph does not measure CPU use, its standalone Task Manager repeatedly displays stale memory readings, its shell advertises an absent network stack, and its author's defense invokes a Quake port that this snapshot does not substantiate. These discrepancies undermine confidence that the published behavior was understood and checked before release. The source also contains artifacts compatible with AI assistance. **The evidence supports criticism of the claims and their validation; it does not establish that the author understands nothing or that AI did all the work.**
+**This release includes an AI-generated desktop wallpaper with verifiable OpenAI provenance.** Its embedded, cryptographically verified C2PA record identifies `ChatGPT` and `gpt-image`. The supplied converter reproduces the committed desktop wallpaper data byte-for-byte from that image. This establishes AI-generated material in the project; it does not establish who wrote the kernel.
+
+There is also a concrete case against the release's validation: its desktop CPU graph does not measure CPU use, its standalone Task Manager repeatedly displays stale memory readings, its shell advertises an absent network stack, and its author's defense invokes a Quake port that this snapshot does not substantiate. Archived build artifacts and request-oriented comments provide further, circumstantial evidence of an assistant-style development workflow. The findings below distinguish direct provenance, implementation defects and inference.
 
 Reviewed on **8 October 2026**, against commit [`c8142cef3cf7bc28906c947fab53d58385ef823a`](https://github.com/PicoOS-Pro-v/picoOS/commit/c8142cef3cf7bc28906c947fab53d58385ef823a), the upstream code revision from which this fork was cloned. Repository citations below point to that fixed revision, including the [original README](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/README.md).
 
@@ -13,6 +15,44 @@ In a [reply challenging the AI allegations](https://www.reddit.com/r/osdev/comme
 > Call it AI all you want, but AI can't compile a stable custom x86 graphics driver and port Quake to a custom kernel.
 
 That is the argument addressed here. It should not be silently rewritten into a stronger quotation such as an explicit declaration that no AI was ever used.
+
+**Direct provenance: the desktop wallpaper's signed record names ChatGPT**
+
+The original commit includes [`docs/wallpaper-source.png`](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/docs/wallpaper-source.png). Its SHA-256 is `ea13e5fa67efa87a86cfbdf4415e9b2ff44ec95ee2221a8db78b4b1eccf16355`. The PNG contains a C2PA manifest with these fields:
+
+| Field | Recorded value |
+| --- | --- |
+| Claim generator | `OpenAI Media Service API` |
+| Action | `c2pa.created` |
+| Software agent | `ChatGPT`, version `gpt-image` |
+| Digital source type | `trainedAlgorithmicMedia` |
+| Recorded creation time | `2026-10-01T16:48:51.791839430Z` |
+| Signing certificate identity | `OpenAI Media Service`, organization `OpenAI OpCo, LLC` |
+
+These are authenticated fields, not a judgment about the image's appearance. Using `c2pa-python 0.38.0` / SDK `0.91.0` with the [official C2PA trust lists at a pinned revision](https://github.com/c2pa-org/conformance-public/tree/43a0a6f09091a062083a4ba33e3acc19dd721282/trust-list) returns `Trusted`, including successful signature, signing-certificate trust and image-data hash checks. The [complete verification report](docs/provenance/verification.json) preserves all results and settings. It also preserves an informational `timeStamp.untrusted` result: the timestamp digest validates, but the timestamp authority's trust chain was not established. The creation time above is therefore reported as recorded, without claiming an independently trusted timestamp. Certificate-purpose settings follow the [C2PA trust model](https://spec.c2pa.org/specifications/specifications/2.3/specs/C2PA_Specification.html#_trust_model); no certificate allow-list or disabled verification was used.
+
+The connection to the actual desktop is reproducible. Running the committed [`tools/mkwallpaper.py`](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/tools/mkwallpaper.py) with its default settings produces exactly the committed [`apps/wallpaper.h`](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/apps/wallpaper.h). The desktop [includes that header](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/apps/menu.c#L19-L20) and [builds the wallpaper at startup](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/apps/menu.c#L1578-L1586).
+
+**Conclusion supported by this artifact:** AI-generated image content is incorporated into the desktop. The record does not identify the person who prompted ChatGPT, reveal that prompt, or attribute any C or assembly code to an AI.
+
+**Release provenance: the public ZIP matches the GitHub import**
+
+The [public release folder](https://drive.google.com/drive/folders/19LPX5pHZpIYsnQT0Tiatpv11nE39frHA) supplies an earlier record than the single GitHub import. Twelve ZIPs, from v0.1 through v2.1, were downloaded and inspected; their URLs, sizes, SHA-256 hashes and embedded bytecode paths are preserved in the [archive inventory](docs/provenance/archives.json).
+
+The [v2.1 ZIP](https://drive.google.com/file/d/1_f1yP_agk3YOhwr4VLzQAunHAiWKag4J/view), SHA-256 `c7fe539acb1e865b65767532e2ccf56971cf79c94fbff8b0fa4456a04d8467da`, contains byte-for-byte matches for **311 of the original Git commit's 312 tracked files**. Only `LICENSE` differs, and no tracked file is missing. This includes the signed wallpaper image, its generated header and the source files discussed here. The [comparison report](docs/provenance/verification.json) ties the findings to the distributed release, rather than to changes made for this critique.
+
+The original commit also tracks two Python bytecode files containing these source-path strings:
+
+```text
+tools/__pycache__/lzss.cpython-313.pyc:
+  /mnt/data/pico_v21/PicoOS-Pro-v2.1/tools/lzss.py
+tools/__pycache__/mkesp.cpython-313.pyc:
+  /mnt/data/pico_v21/PicoOS-Pro-v2.1/tools/mkesp.py
+```
+
+Earlier archives contain paths under `/home/user/picoos/`; v2.0 contains `/home/user/myos/PicoOS-Pro-v2.0/tools/`. Together with the sandbox tooling and source-handoff language discussed below, these are concrete traces compatible with passing release archives through a hosted assistant environment. **That interpretation remains circumstantial:** directory names can be chosen by anyone, and a bytecode filename need not identify the machine or person that compiled it. They are not a vendor-specific code-generation record.
+
+Git unfamiliarity does not close that evidentiary gap. The author's [reply about Git](https://www.reddit.com/r/osdev/comments/1wxom7n/comment/pe0e8id/) describes it as overhead, while the v0.6 archive already contains an initialized `.git` directory with no object or ref files. Neither establishes who wrote the code or how well the author understands it.
 
 **The desktop's CPU graph is a clock ratio, not a utilization measurement**
 
@@ -97,11 +137,21 @@ Similarly, the [network stub's introduction](https://github.com/PicoOS-Pro-v/pic
 
 **What remains unproven**
 
-The inspected revision has [one initial import commit](https://github.com/PicoOS-Pro-v/picoOS/commit/c8142cef3cf7bc28906c947fab53d58385ef823a), so its Git history cannot reconstruct the development process. That is a limitation of the evidence, not evidence of concealment. No AI transcript, explicit AI attribution or model-specific generation record was found in the tracked files reviewed. Comment style, bugs and the choice to distribute ZIP files cannot fill that gap.
+The inspected revision has [one initial import commit](https://github.com/PicoOS-Pro-v/picoOS/commit/c8142cef3cf7bc28906c947fab53d58385ef823a), so its Git history cannot reconstruct the development process. The release archives provide snapshots, but no attributable conversation or generation record for the kernel was found in this review. The wallpaper has direct AI provenance; extending that finding to all source code would require further evidence.
 
 The bundled DOOM sources also should not be presented as tens of thousands of lines newly written by this author or by an AI: the project [explicitly credits doomgeneric and distinguishes its platform layer](https://github.com/PicoOS-Pro-v/picoOS/blob/c8142cef3cf7bc28906c947fab53d58385ef823a/docs/DOOM.md#L50-L65).
 
-Taken together, the measurable defects and contradictory descriptions support a serious criticism of release validation: the public presentation promises more than the implementation delivers. The cited replies do not answer those implementation problems, and pointing to a running game cannot establish who wrote its port. Substantial AI assistance is a possible explanation for the request and handoff artifacts, but the evidence does not distinguish it from human collaboration, ordinary mistakes or poorly maintained documentation. Establishing the author's understanding or the actual division of work would require attributable development records or concrete technical explanations. Declaring total ignorance or complete AI authorship would go beyond this record.
+The authenticated image establishes AI-generated content in the release. The measurable defects and contradictory descriptions establish specific failures of implementation and validation. Substantial AI coding assistance is compatible with the request, sandbox and handoff artifacts, but the available records do not establish the division of programming work. A running game cannot prove human-only authorship; these bugs cannot prove total ignorance either.
+
+To reproduce the provenance checks, create an isolated Python environment and run the [verification script](tools/verify_provenance.py). It reads the fixed original Git revision, downloads hash-pinned official trust lists, verifies the C2PA record, regenerates the wallpaper into a temporary directory and reports the bytecode strings. Passing a downloaded v2.1 ZIP also repeats the 312-file comparison.
+
+```sh
+python3 -m venv /tmp/slopos-provenance-check
+/tmp/slopos-provenance-check/bin/pip install c2pa-python==0.38.0 Pillow==12.3.0 numpy==2.5.3
+/tmp/slopos-provenance-check/bin/python tools/verify_provenance.py
+# Optional: append the path to the public release ZIP:
+/tmp/slopos-provenance-check/bin/python tools/verify_provenance.py /path/to/PicoOS-Pro-v2.1.zip
+```
 
 To inspect the same evidence locally, use the fixed revision rather than the changing branch head:
 
@@ -118,4 +168,4 @@ git grep -n -i quake "$review_commit" -- . ':!doom1.wad'
 git ls-tree -r --name-only "$review_commit" -- net/
 ```
 
-This replacement README was prepared with AI assistance. Its review covered the public discussion, repository history, selected kernel and application code, build tooling and documentation; it was not an exhaustive audit or a runtime validation of the OS.
+This replacement README and its verification script were prepared with AI assistance. The review covered the public discussion, repository history, twelve release archives, signed image metadata, selected kernel and application code, build tooling and documentation. It was not an exhaustive audit or a runtime validation of the OS.
